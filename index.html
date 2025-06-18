@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>MLB 3D Pitch Replay</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #0a0a0a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+  }
+
+  #ui-container {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background: rgba(22, 22, 22, 0.95);
+    padding: 30px 26px;
+    border-radius: 20px;
+    width: 280px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border: 1px solid #333;
+  }
+
+  #ui-container label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #dddddd;
+  }
+
+  #ui-container select,
+  #ui-container button {
+    width: 100%;
+    padding: 11px 13px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background: linear-gradient(to right, #202020, #181818);
+    color: #f0f0f0;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  #ui-container select:focus,
+  #ui-container button:hover {
+    background: linear-gradient(to right, #2d2d2d, #1f1f1f);
+    outline: none;
+  }
+
+  #ui-container button {
+    background: linear-gradient(to right, #a5a5a5, #888888);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border: none;
+    color: #111;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  #ui-container button:hover {
+    background: linear-gradient(to right, #cccccc, #aaaaaa);
+  }
+
+  #ui-container input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.15);
+    vertical-align: middle;
+    accent-color: #888888;
+  }
+
+  #ui-container label[for="trailToggle"] {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 4px;
+    color: #ccc;
+  }
+
+  #scorebug {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: linear-gradient(145deg, #1a1a1a, #0e0e0e);
+    padding: 20px 26px;
+    border-radius: 14px;
+    font-size: 16px;
+    line-height: 1.75;
+    font-family: 'Segoe UI', sans-serif;
+    color: #eaeaea;
+    min-width: 220px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    border: 1px solid #2a2a2a;
+  }
+
+  #scorebug strong {
+    color: silver;
+    font-weight: 700;
+    font-size: 17px;
+  }
+
+  #scorebug div {
+    margin-bottom: 8px;
+  }
+
+  canvas {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div id="ui-container">
+<label for="teamSelect">Select Team</label>
+<select id="teamSelect"></select>
+<label for="batterSelect">Select Batter</label>
+<select id="batterSelect"></select>
+<label for="dateSelect">Select Game Date</label>
+<select id="dateSelect"></select>
+<label for="pitcherSelect">Select Pitcher</label>
+<select id="pitcherSelect"></select>
+<label for="pitchSelect">Select Pitch</label>
+<select id="pitchSelect"></select>
+<label for="cameraSelect">Select Camera Angle</label>
+<select id="cameraSelect">
+  <option value="catcher">Home-Plate (Catcher) View</option>
+  <option value="pitcher">Pitcher View</option>
+  <option value="rhh">Right-Hand Hitter (RHH) View</option>
+  <option value="lhh">Left-Hand Hitter (LHH) View</option>
+  <option value="1b">First-Base Line View</option>
+  <option value="3b">Third-Base Line View</option>
+  <option value="side">Side (Low Third-Base) View</option>
+  <option value="top">Top-Down View</option>
+</select>
+<label><input id="trailToggle" type="checkbox"/> Show Trail</label>
+<button id="replayBtn">Replay</button>
+<button id="pauseBtn">Pause</button>
+</div>
+<div id="scorebug">
+<div><strong id="scorebugTeam">TEAM</strong> vs <strong id="scorebugOpponent">OPP</strong></div>
+<div>Batter: <span id="scorebugBatter">Name</span></div>
+<div>Pitcher: <span id="scorebugPitcher">Name</span></div>
+<div>Inning: <span id="scorebugTopBot">Top</span> <span id="scorebugInning">1</span></div>
+<div>Count: <span id="scorebugCount">0-0</span></div>
+</div>
+<canvas id="three-canvas"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
